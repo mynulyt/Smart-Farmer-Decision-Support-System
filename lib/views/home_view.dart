@@ -6,6 +6,19 @@ import 'package:get/get.dart';
 
 import '../controllers/prediction_controller.dart';
 
+class AppColors {
+  static const Color primaryColor = Color(0xFFF6E31A);
+  static const Color secondaryColor = Color(0xFF620A1E);
+  static const Color borderColor = Color(0xFFA8A8A9);
+  static const Color textFieldColor = Color(0xFFEFF0F7);
+  static const Color textColor1 = Color(0xFF2B2B2B);
+  static const Color textColor2 = Color(0xFF797777);
+  static const Color redColor = Color(0xFFCC2655);
+  static const Color whiteColor = Colors.white;
+  static const Color greyColor = Color(0xFFEFF0F7);
+  static const Color iconColor = Color(0xFF626262);
+}
+
 class HomeView extends StatelessWidget {
   HomeView({super.key});
 
@@ -13,15 +26,12 @@ class HomeView extends StatelessWidget {
 
   Widget buildField({
     required String hint,
-
     required TextEditingController controller,
-
     required IconData icon,
-
     bool isNumber = false,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 18),
 
       child: TextField(
         controller: controller,
@@ -34,42 +44,255 @@ class HomeView extends StatelessWidget {
             ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))]
             : [],
 
-        style: const TextStyle(color: Colors.white, fontSize: 16),
+        style: const TextStyle(
+          color: AppColors.textColor1,
+          fontSize: 15,
+          fontWeight: FontWeight.w500,
+        ),
 
         decoration: InputDecoration(
-          prefixIcon: Icon(icon, color: Colors.white70),
+          prefixIcon: Icon(icon, color: AppColors.secondaryColor),
 
           hintText: hint,
 
-          hintStyle: const TextStyle(color: Colors.white70),
+          hintStyle: const TextStyle(
+            color: AppColors.textColor2,
+            fontWeight: FontWeight.w400,
+          ),
 
           filled: true,
 
-          fillColor: Colors.white.withOpacity(0.12),
+          fillColor: AppColors.whiteColor.withOpacity(0.70),
 
           contentPadding: const EdgeInsets.symmetric(
-            vertical: 18,
             horizontal: 20,
-          ),
-
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(22),
-
-            borderSide: BorderSide.none,
+            vertical: 18,
           ),
 
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(22),
+            borderRadius: BorderRadius.circular(20),
 
-            borderSide: BorderSide(color: Colors.white24),
+            borderSide: BorderSide(
+              color: AppColors.borderColor.withOpacity(0.3),
+            ),
           ),
 
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(22),
+            borderRadius: BorderRadius.circular(20),
 
-            borderSide: const BorderSide(color: Colors.white, width: 1.5),
+            borderSide: const BorderSide(
+              color: AppColors.secondaryColor,
+              width: 1.5,
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  void showResultPopup() {
+    Get.dialog(
+      Dialog(
+        backgroundColor: Colors.transparent,
+
+        child: TweenAnimationBuilder(
+          duration: const Duration(milliseconds: 500),
+
+          tween: Tween<double>(begin: 0, end: 1),
+
+          builder: (context, value, child) {
+            return Transform.scale(
+              scale: value,
+
+              child: Opacity(opacity: value, child: child),
+            );
+          },
+
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(35),
+
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+
+              child: Container(
+                padding: const EdgeInsets.all(25),
+
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      AppColors.whiteColor.withOpacity(0.85),
+
+                      AppColors.primaryColor.withOpacity(0.55),
+                    ],
+
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+
+                  borderRadius: BorderRadius.circular(35),
+
+                  border: Border.all(color: Colors.white54),
+                ),
+
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(18),
+
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+
+                        color: AppColors.primaryColor,
+                      ),
+
+                      child: const Icon(
+                        Icons.eco,
+
+                        size: 45,
+
+                        color: AppColors.secondaryColor,
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    const Text(
+                      "Prediction Result",
+
+                      style: TextStyle(
+                        fontSize: 24,
+
+                        fontWeight: FontWeight.bold,
+
+                        color: AppColors.textColor1,
+                      ),
+                    ),
+
+                    const SizedBox(height: 25),
+
+                    resultTile(
+                      title: "Recommended Crop",
+                      value: controller.recommendedCrop.value.toUpperCase(),
+                      icon: Icons.grass,
+                    ),
+
+                    const SizedBox(height: 15),
+
+                    resultTile(
+                      title: "Estimated Yield",
+                      value: "${controller.estimatedYield.value} Tons",
+                      icon: Icons.bar_chart,
+                    ),
+
+                    const SizedBox(height: 15),
+
+                    resultTile(
+                      title: "AI Suggestion",
+                      value: controller.smartSuggestion.value,
+                      icon: Icons.tips_and_updates,
+                    ),
+
+                    const SizedBox(height: 25),
+
+                    SizedBox(
+                      width: double.infinity,
+
+                      height: 55,
+
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.secondaryColor,
+
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                        ),
+
+                        onPressed: () {
+                          Get.back();
+                        },
+
+                        child: const Text(
+                          "Awesome",
+
+                          style: TextStyle(
+                            color: AppColors.whiteColor,
+
+                            fontSize: 18,
+
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget resultTile({
+    required String title,
+    required String value,
+    required IconData icon,
+  }) {
+    return Container(
+      width: double.infinity,
+
+      padding: const EdgeInsets.all(16),
+
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.55),
+
+        borderRadius: BorderRadius.circular(20),
+      ),
+
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+
+        children: [
+          Icon(icon, color: AppColors.secondaryColor),
+
+          const SizedBox(width: 14),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+
+              children: [
+                Text(
+                  title,
+
+                  style: const TextStyle(
+                    color: AppColors.textColor2,
+
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+
+                const SizedBox(height: 5),
+
+                Text(
+                  value,
+
+                  style: const TextStyle(
+                    color: AppColors.textColor1,
+
+                    fontSize: 16,
+
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -77,10 +300,18 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.primaryColor,
+
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xfff6d365), Color(0xfffda085)],
+            colors: [
+              AppColors.primaryColor,
+
+              AppColors.primaryColor.withOpacity(0.85),
+
+              AppColors.secondaryColor,
+            ],
 
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -91,217 +322,194 @@ class HomeView extends StatelessWidget {
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(20),
 
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
 
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+              children: [
+                const SizedBox(height: 10),
 
-                child: Container(
-                  padding: const EdgeInsets.all(20),
+                const Text(
+                  "Smart Agriculture AI",
 
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.15),
+                  style: TextStyle(
+                    color: AppColors.redColor,
 
-                    borderRadius: BorderRadius.circular(30),
+                    fontSize: 30,
 
-                    border: Border.all(color: Colors.white24),
-                  ),
-
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-
-                    children: [
-                      const SizedBox(height: 20),
-
-                      const Text(
-                        "Smart Agriculture AI",
-
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-
-                      const SizedBox(height: 10),
-
-                      const Text(
-                        "AI Powered Crop Recommendation & Yield Prediction",
-
-                        style: TextStyle(color: Colors.white70),
-                      ),
-
-                      const SizedBox(height: 30),
-
-                      buildField(
-                        hint: "Nitrogen (N)",
-                        controller: controller.nController,
-                        icon: Icons.science,
-                        isNumber: true,
-                      ),
-
-                      buildField(
-                        hint: "Phosphorus (P)",
-                        controller: controller.pController,
-                        icon: Icons.biotech,
-                        isNumber: true,
-                      ),
-
-                      buildField(
-                        hint: "Potassium (K)",
-                        controller: controller.kController,
-                        icon: Icons.grass,
-                        isNumber: true,
-                      ),
-
-                      buildField(
-                        hint: "Temperature",
-                        controller: controller.tempController,
-                        icon: Icons.thermostat,
-                        isNumber: true,
-                      ),
-
-                      buildField(
-                        hint: "Humidity",
-                        controller: controller.humidityController,
-                        icon: Icons.water_drop,
-                        isNumber: true,
-                      ),
-
-                      buildField(
-                        hint: "PH Value",
-                        controller: controller.phController,
-                        icon: Icons.science_outlined,
-                        isNumber: true,
-                      ),
-
-                      buildField(
-                        hint: "Rainfall",
-                        controller: controller.rainfallController,
-                        icon: Icons.cloud,
-                        isNumber: true,
-                      ),
-
-                      buildField(
-                        hint: "State",
-                        controller: controller.stateController,
-                        icon: Icons.location_on,
-                      ),
-
-                      buildField(
-                        hint: "Season",
-                        controller: controller.seasonController,
-                        icon: Icons.calendar_month,
-                      ),
-
-                      buildField(
-                        hint: "Area",
-                        controller: controller.areaController,
-                        icon: Icons.square_foot,
-                        isNumber: true,
-                      ),
-
-                      const SizedBox(height: 20),
-
-                      Obx(() {
-                        return SizedBox(
-                          width: double.infinity,
-
-                          height: 55,
-
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-
-                              foregroundColor: Colors.orange,
-
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-
-                            onPressed: controller.isLoading.value
-                                ? null
-                                : () {
-                                    controller.predictCrop();
-                                  },
-
-                            child: controller.isLoading.value
-                                ? const CircularProgressIndicator()
-                                : const Text(
-                                    "Predict Now",
-
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                          ),
-                        );
-                      }),
-
-                      const SizedBox(height: 30),
-
-                      Obx(() {
-                        if (controller.recommendedCrop.value.isEmpty) {
-                          return const SizedBox();
-                        }
-
-                        return Container(
-                          width: double.infinity,
-
-                          padding: const EdgeInsets.all(20),
-
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.15),
-
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-
-                            children: [
-                              Text(
-                                "Recommended Crop: ${controller.recommendedCrop.value.toUpperCase()}",
-
-                                style: const TextStyle(
-                                  color: Colors.white,
-
-                                  fontSize: 22,
-
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-
-                              const SizedBox(height: 10),
-
-                              Text(
-                                "Estimated Yield: ${controller.estimatedYield.value} tons",
-
-                                style: const TextStyle(
-                                  color: Colors.white70,
-
-                                  fontSize: 18,
-                                ),
-                              ),
-
-                              const SizedBox(height: 10),
-
-                              Text(
-                                controller.smartSuggestion.value,
-
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                    ],
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
+
+                const SizedBox(height: 8),
+
+                const Text(
+                  "AI Powered Crop Recommendation & Yield Prediction System",
+
+                  style: TextStyle(
+                    color: AppColors.secondaryColor,
+                    fontSize: 15,
+                  ),
+                ),
+
+                const SizedBox(height: 30),
+
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(35),
+
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+
+                    child: Container(
+                      padding: const EdgeInsets.all(22),
+
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.18),
+
+                        borderRadius: BorderRadius.circular(35),
+
+                        border: Border.all(color: Colors.white24),
+                      ),
+
+                      child: Column(
+                        children: [
+                          buildField(
+                            hint: "Nitrogen (N)",
+                            controller: controller.nController,
+                            icon: Icons.science,
+                            isNumber: true,
+                          ),
+
+                          buildField(
+                            hint: "Phosphorus (P)",
+                            controller: controller.pController,
+                            icon: Icons.biotech,
+                            isNumber: true,
+                          ),
+
+                          buildField(
+                            hint: "Potassium (K)",
+                            controller: controller.kController,
+                            icon: Icons.grass,
+                            isNumber: true,
+                          ),
+
+                          buildField(
+                            hint: "Temperature",
+                            controller: controller.tempController,
+                            icon: Icons.thermostat,
+                            isNumber: true,
+                          ),
+
+                          buildField(
+                            hint: "Humidity",
+                            controller: controller.humidityController,
+                            icon: Icons.water_drop,
+                            isNumber: true,
+                          ),
+
+                          buildField(
+                            hint: "PH Value",
+                            controller: controller.phController,
+                            icon: Icons.science_outlined,
+                            isNumber: true,
+                          ),
+
+                          buildField(
+                            hint: "Rainfall",
+                            controller: controller.rainfallController,
+                            icon: Icons.cloud,
+                            isNumber: true,
+                          ),
+
+                          buildField(
+                            hint: "State",
+                            controller: controller.stateController,
+                            icon: Icons.location_on,
+                          ),
+
+                          buildField(
+                            hint: "Season",
+                            controller: controller.seasonController,
+                            icon: Icons.calendar_month,
+                          ),
+
+                          buildField(
+                            hint: "Area",
+                            controller: controller.areaController,
+                            icon: Icons.square_foot,
+                            isNumber: true,
+                          ),
+
+                          const SizedBox(height: 10),
+
+                          Obx(() {
+                            return SizedBox(
+                              width: double.infinity,
+
+                              height: 60,
+
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.secondaryColor,
+
+                                  elevation: 0,
+
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+
+                                onPressed: controller.isLoading.value
+                                    ? null
+                                    : () async {
+                                        await controller.predictCrop();
+
+                                        if (controller
+                                            .recommendedCrop
+                                            .value
+                                            .isNotEmpty) {
+                                          showResultPopup();
+                                        }
+                                      },
+
+                                child: controller.isLoading.value
+                                    ? const CircularProgressIndicator(
+                                        color: Colors.white,
+                                      )
+                                    : const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+
+                                        children: [
+                                          Icon(
+                                            Icons.auto_awesome,
+                                            color: Colors.white,
+                                          ),
+
+                                          SizedBox(width: 10),
+
+                                          Text(
+                                            "Predict with AI",
+
+                                            style: TextStyle(
+                                              color: Colors.white,
+
+                                              fontSize: 18,
+
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                              ),
+                            );
+                          }),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
