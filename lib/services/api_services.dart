@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String baseUrl = "http://192.168.1.8:5000";
+  static const String baseUrl = "http://192.168.1.7:5000";
 
   static Future<Map<String, dynamic>> predictCrop({
     required double n,

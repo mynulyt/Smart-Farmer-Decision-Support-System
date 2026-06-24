@@ -1,29 +1,55 @@
 import 'dart:ui';
-
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:smart_farmer/theme/app_color.dart';
 
 import '../controllers/prediction_controller.dart';
-
-class AppColors {
-  static const Color primaryColor = Color(0xFFF6E31A);
-  static const Color secondaryColor = Color(0xFF620A1E);
-  static const Color borderColor = Color(0xFFA8A8A9);
-  static const Color textFieldColor = Color(0xFFEFF0F7);
-  static const Color textColor1 = Color(0xFF2B2B2B);
-  static const Color textColor2 = Color(0xFF797777);
-  static const Color redColor = Color(0xFFCC2655);
-  static const Color whiteColor = Colors.white;
-  static const Color greyColor = Color(0xFFEFF0F7);
-  static const Color iconColor = Color(0xFF626262);
-}
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
 
   final controller = Get.put(PredictionController());
-
+  final List<String> seasons = [
+    "Kharif",
+    "Rabi",
+    "Zaid",
+    "Autumn",
+    "Winter",
+    "Summer",
+    "Whole Year",
+  ];
+  final List<String> indianStates = [
+    "Andhra Pradesh",
+    "Arunachal Pradesh",
+    "Assam",
+    "Bihar",
+    "Chhattisgarh",
+    "Goa",
+    "Gujarat",
+    "Haryana",
+    "Himachal Pradesh",
+    "Jharkhand",
+    "Karnataka",
+    "Kerala",
+    "Madhya Pradesh",
+    "Maharashtra",
+    "Manipur",
+    "Meghalaya",
+    "Mizoram",
+    "Nagaland",
+    "Odisha",
+    "Punjab",
+    "Rajasthan",
+    "Sikkim",
+    "Tamil Nadu",
+    "Telangana",
+    "Tripura",
+    "Uttar Pradesh",
+    "Uttarakhand",
+    "West Bengal",
+  ];
   Widget buildField({
     required String hint,
     required TextEditingController controller,
@@ -32,7 +58,6 @@ class HomeView extends StatelessWidget {
   }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 18),
-
       child: TextField(
         controller: controller,
 
@@ -47,7 +72,7 @@ class HomeView extends StatelessWidget {
         style: const TextStyle(
           color: AppColors.textColor1,
           fontSize: 15,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
         ),
 
         decoration: InputDecoration(
@@ -57,12 +82,11 @@ class HomeView extends StatelessWidget {
 
           hintStyle: const TextStyle(
             color: AppColors.textColor2,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
           ),
 
           filled: true,
-
-          fillColor: AppColors.whiteColor.withOpacity(0.70),
+          fillColor: Colors.white.withOpacity(0.90),
 
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 20,
@@ -71,18 +95,16 @@ class HomeView extends StatelessWidget {
 
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-
             borderSide: BorderSide(
-              color: AppColors.borderColor.withOpacity(0.3),
+              color: AppColors.borderColor.withOpacity(0.7),
             ),
           ),
 
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-
             borderSide: const BorderSide(
               color: AppColors.secondaryColor,
-              width: 1.5,
+              width: 2,
             ),
           ),
         ),
@@ -97,13 +119,11 @@ class HomeView extends StatelessWidget {
 
         child: TweenAnimationBuilder(
           duration: const Duration(milliseconds: 500),
-
           tween: Tween<double>(begin: 0, end: 1),
 
           builder: (context, value, child) {
             return Transform.scale(
               scale: value,
-
               child: Opacity(opacity: value, child: child),
             );
           },
@@ -120,9 +140,8 @@ class HomeView extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      AppColors.whiteColor.withOpacity(0.85),
-
-                      AppColors.primaryColor.withOpacity(0.55),
+                      Colors.white.withOpacity(0.95),
+                      AppColors.lightGreen.withOpacity(0.7),
                     ],
 
                     begin: Alignment.topLeft,
@@ -141,18 +160,15 @@ class HomeView extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(18),
 
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-
                         color: AppColors.primaryColor,
                       ),
 
                       child: const Icon(
                         Icons.eco,
-
                         size: 45,
-
-                        color: AppColors.secondaryColor,
+                        color: Colors.white,
                       ),
                     ),
 
@@ -160,12 +176,9 @@ class HomeView extends StatelessWidget {
 
                     const Text(
                       "Prediction Result",
-
                       style: TextStyle(
                         fontSize: 24,
-
                         fontWeight: FontWeight.bold,
-
                         color: AppColors.textColor1,
                       ),
                     ),
@@ -198,7 +211,6 @@ class HomeView extends StatelessWidget {
 
                     SizedBox(
                       width: double.infinity,
-
                       height: 55,
 
                       child: ElevatedButton(
@@ -216,12 +228,9 @@ class HomeView extends StatelessWidget {
 
                         child: const Text(
                           "Awesome",
-
                           style: TextStyle(
-                            color: AppColors.whiteColor,
-
+                            color: Colors.white,
                             fontSize: 18,
-
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -244,12 +253,10 @@ class HomeView extends StatelessWidget {
   }) {
     return Container(
       width: double.infinity,
-
       padding: const EdgeInsets.all(16),
 
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.55),
-
+        color: Colors.white.withOpacity(0.65),
         borderRadius: BorderRadius.circular(20),
       ),
 
@@ -271,7 +278,6 @@ class HomeView extends StatelessWidget {
 
                   style: const TextStyle(
                     color: AppColors.textColor2,
-
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -283,9 +289,7 @@ class HomeView extends StatelessWidget {
 
                   style: const TextStyle(
                     color: AppColors.textColor1,
-
                     fontSize: 16,
-
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -303,15 +307,9 @@ class HomeView extends StatelessWidget {
       backgroundColor: AppColors.primaryColor,
 
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              AppColors.primaryColor,
-
-              AppColors.primaryColor.withOpacity(0.85),
-
-              AppColors.secondaryColor,
-            ],
+            colors: [Color(0xFF4CAF50), Color(0xFF66BB6A), Color(0xFF1B5E20)],
 
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -332,10 +330,8 @@ class HomeView extends StatelessWidget {
                   "Smart Agriculture AI",
 
                   style: TextStyle(
-                    color: AppColors.redColor,
-
+                    color: Colors.white,
                     fontSize: 30,
-
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -345,10 +341,7 @@ class HomeView extends StatelessWidget {
                 const Text(
                   "AI Powered Crop Recommendation & Yield Prediction System",
 
-                  style: TextStyle(
-                    color: AppColors.secondaryColor,
-                    fontSize: 15,
-                  ),
+                  style: TextStyle(color: Colors.white70, fontSize: 15),
                 ),
 
                 const SizedBox(height: 30),
@@ -421,16 +414,135 @@ class HomeView extends StatelessWidget {
                             isNumber: true,
                           ),
 
-                          buildField(
-                            hint: "State",
-                            controller: controller.stateController,
-                            icon: Icons.location_on,
-                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 18),
 
-                          buildField(
-                            hint: "Season",
-                            controller: controller.seasonController,
-                            icon: Icons.calendar_month,
+                            child: DropdownSearch<String>(
+                              items: (filter, loadProps) => indianStates,
+
+                              selectedItem:
+                                  controller.stateController.text.isEmpty
+                                  ? null
+                                  : controller.stateController.text,
+
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+
+                                searchFieldProps: TextFieldProps(
+                                  decoration: InputDecoration(
+                                    hintText: "Search State",
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              decoratorProps: DropDownDecoratorProps(
+                                decoration: InputDecoration(
+                                  prefixIcon: const Icon(
+                                    Icons.location_on,
+                                    color: AppColors.secondaryColor,
+                                  ),
+
+                                  hintText: "Select State",
+
+                                  filled: true,
+                                  fillColor: Colors.white.withOpacity(0.90),
+
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                    vertical: 18,
+                                  ),
+
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: BorderSide(
+                                      color: AppColors.borderColor.withOpacity(
+                                        0.7,
+                                      ),
+                                    ),
+                                  ),
+
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: const BorderSide(
+                                      color: AppColors.secondaryColor,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              onSelected: (value) {
+                                controller.stateController.text = value ?? "";
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 18),
+
+                            child: DropdownSearch<String>(
+                              items: (filter, loadProps) => seasons,
+
+                              selectedItem:
+                                  controller.seasonController.text.isEmpty
+                                  ? null
+                                  : controller.seasonController.text,
+
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+
+                                searchFieldProps: TextFieldProps(
+                                  decoration: InputDecoration(
+                                    hintText: "Search Season",
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              decoratorProps: DropDownDecoratorProps(
+                                decoration: InputDecoration(
+                                  prefixIcon: const Icon(
+                                    Icons.calendar_month,
+                                    color: AppColors.secondaryColor,
+                                  ),
+
+                                  hintText: "Select Season",
+
+                                  filled: true,
+                                  fillColor: Colors.white.withOpacity(0.90),
+
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                    vertical: 18,
+                                  ),
+
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: BorderSide(
+                                      color: AppColors.borderColor.withOpacity(
+                                        0.7,
+                                      ),
+                                    ),
+                                  ),
+
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: const BorderSide(
+                                      color: AppColors.secondaryColor,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              onSelected: (value) {
+                                controller.seasonController.text = value ?? "";
+                              },
+                            ),
                           ),
 
                           buildField(
@@ -445,7 +557,6 @@ class HomeView extends StatelessWidget {
                           Obx(() {
                             return SizedBox(
                               width: double.infinity,
-
                               height: 60,
 
                               child: ElevatedButton(

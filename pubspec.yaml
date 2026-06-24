@@ -35,6 +35,7 @@ dependencies:
 
   get: ^4.6.6
   http: ^1.2.1
+  dropdown_search: ^7.0.0
 
   glassmorphism: ^3.0.0
 

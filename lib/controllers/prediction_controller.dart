@@ -3,10 +3,6 @@ import 'package:get/get.dart';
 import 'package:smart_farmer/services/api_services.dart';
 
 class PredictionController extends GetxController {
-  // ========================
-  // TEXT CONTROLLERS
-  // ========================
-
   final nController = TextEditingController();
   final pController = TextEditingController();
   final kController = TextEditingController();
@@ -22,10 +18,6 @@ class PredictionController extends GetxController {
 
   final areaController = TextEditingController();
 
-  // ========================
-  // OBS VARIABLES
-  // ========================
-
   RxBool isLoading = false.obs;
 
   RxString recommendedCrop = ''.obs;
@@ -33,10 +25,6 @@ class PredictionController extends GetxController {
   RxString smartSuggestion = ''.obs;
 
   RxDouble estimatedYield = 0.0.obs;
-
-  // ========================
-  // PREDICT FUNCTION
-  // ========================
 
   Future<void> predictCrop() async {
     try {
